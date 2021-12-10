@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -24,3 +24,31 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+@import "swiper/scss";
+@import "swiper/scss/navigation";
+@import "swiper/scss/pagination";
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,600;1,100;1,400;1,600&display=swap");
+
+* {
+  font-family: "Poppins", sans-serif !important;
+}
+
+.searchbar-input.sc-ion-searchbar-md {
+  border-radius: 2em;
+  background-position: left 0.5em center;
+  height: auto;
+  font-size: 1.1rem;
+  font-weight: 400;
+  -webkit-box-shadow: 0 0.5em 0.5em rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 0.5em 0.5em rgba(0, 0, 0, 0.1) !important;
+  padding-left: 2.5em !important;
+  padding-right: 2em !important;
+}
+
+.swiper-pagination .swiper-pagination-bullet-active {
+  color: var(--ion-color-primary);
+  background-color: var(--ion-color-primary);
+  opacity: 1;
+}

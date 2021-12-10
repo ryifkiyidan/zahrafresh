@@ -8,12 +8,15 @@ import { ProdukPageRoutingModule } from './produk-routing.module';
 
 import { ProdukPage } from './produk.page';
 
+import { SwiperModule
+ } from 'swiper/angular';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ProdukPageRoutingModule
+    ProdukPageRoutingModule,
+    SwiperModule
   ],
   declarations: [ProdukPage]
 })

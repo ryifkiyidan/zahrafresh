@@ -18,7 +18,6 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 // Import LocalStorage Module
 import { IonicStorageModule } from '@ionic/storage-angular';
 
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -29,7 +28,7 @@ import { IonicStorageModule } from '@ionic/storage-angular';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot()
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

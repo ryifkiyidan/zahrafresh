@@ -1,0 +1,39 @@
+@media only screen and (max-width: 575px) {
+  swiper {
+    border-radius: 0;
+  }
+}
+@media only screen and (min-width: 576px) {
+  swiper {
+    border-radius: 15px;
+  }
+}
+
+.swiper-image {
+  object-fit: cover;
+  width: 100%;
+  aspect-ratio: 2/1;
+}
+
+.produk-image {
+  object-fit: cover;
+  width: 100%;
+  aspect-ratio: 4/3;
+}
+
+.max-lines-1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.max-lines-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

@@ -1,0 +1,7 @@
+{
+  "name": "zahrafresh",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

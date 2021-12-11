@@ -2,17 +2,72 @@
   swiper {
     border-radius: 0;
   }
+  .produk-container {
+    border-radius: 0;
+  }
 }
 @media only screen and (min-width: 576px) {
   swiper {
-    border-radius: 15px;
+    border-radius: 1rem;
   }
+  .produk-container {
+    border-radius: 1rem;
+  }
+}
+
+/* Transparent standard */
+ion-toolbar {
+  --background: transparent;
+  --ion-color-base: transparent !important;
+}
+
+/* Show background if class is active */
+.show-background {
+  border-style: none;
+  background: var(--ion-color-primary);
+}
+
+/* Remove bottom border on md */
+.header-md::after {
+  background-image: none;
+}
+
+/* Remove bottom border on ios */
+.header-ios ion-toolbar:last-child {
+  --border-width: 0;
+}
+
+.header-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
 }
 
 .swiper-image {
   object-fit: cover;
   width: 100%;
-  aspect-ratio: 2/1;
+  aspect-ratio: 16/9;
+}
+
+.produk-container {
+  margin: 2rem 0;
+  padding: 1rem 0.5rem;
+  background-color: var(--ion-color-light) !important;
+}
+
+.card {
+  padding: 0.75rem;
+}
+
+.card-image {
+  position: relative;
+  border-radius: 1em 1em 0 0;
+  overflow: hidden;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card-detail {
+  padding: 1rem 0;
 }
 
 .produk-image {

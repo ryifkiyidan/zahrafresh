@@ -1,6 +1,8 @@
 import { AfterContentChecked, Component, OnInit, ViewChild } from '@angular/core';
 import { SwiperComponent } from 'swiper/angular';
 import SwiperCore, { SwiperOptions, Pagination, Autoplay } from 'swiper';
+import { ModalController } from '@ionic/angular';
+import { ProdukDetailModalComponent } from './../../../components/produk-detail-modal/produk-detail-modal.component';
 
 SwiperCore.use([
   Pagination,
@@ -24,7 +26,9 @@ export class ProdukPage implements OnInit, AfterContentChecked {
     autoplay: {delay: 3000},
   };
 
-  constructor() { }
+  constructor(
+    private modalController: ModalController,
+  ) { }
 
   ngAfterContentChecked(){
     if (this.swiper) {
@@ -33,6 +37,16 @@ export class ProdukPage implements OnInit, AfterContentChecked {
   }
 
   ngOnInit() {
+  }
+
+  async openProdukDetailModal(key){
+    const modal = await this.modalController.create({
+      component: ProdukDetailModalComponent,
+      // componentProps: {
+      //   apartemen: this.apartemens.find(res => res.key === key)
+      // }
+    });
+    await modal.present();
   }
 
 }

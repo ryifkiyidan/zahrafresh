@@ -24,7 +24,7 @@
           </ion-text>
 
           <div style="display: flex; align-items: center;">
-            <ion-button size="small" fill="clear" shape="round"><ion-icon name="person" slot="start"></ion-icon> Login</ion-button>
+            <ion-button size="small" fill="clear" shape="round" routerLink="../akun"><ion-icon name="person" slot="start"></ion-icon> Login</ion-button>
           </div>
         </div>
         <!-- Image Slide -->
@@ -48,27 +48,27 @@
           <ion-grid>
             <ion-row>
               <ion-col sizeXs="6" sizeSm="6" sizeMd="4" sizeLg="4" sizeXl="3" *ngFor="let item of [].constructor(10); let i = index">
-                <div class="card" *ngIf="i % 2 === 0">
+                <div class="card" *ngIf="i % 2 === 0" (click)="openProdukDetailModal(1)">
                   <div class="card-image">
                     <ion-img class="produk-image" src="https://duniasegar.com/wp-content/uploads/2020/07/20200628_1326.edt2_-1536x1004.jpg"></ion-img>
                   </div>
                   <div class="card-detail">
                     <ion-text style="font-size: 16px;" class="max-lines-1"><b>Apel Sunpride</b></ion-text>
                     <ion-text style="font-size: 12px; margin-bottom: 0.5rem;" class="max-lines-2">Apel segar yang diambil langsung dari perkebunan</ion-text>
-                    <ion-text style="font-size: 14px;" color="primary"><b>Rp.30.000</b></ion-text><ion-text style="font-size: 14px;">/kg</ion-text>
+                    <ion-text style="font-size: 14px;" color="primary"><b>Rp30.000</b></ion-text><ion-text style="font-size: 14px;">/kg</ion-text>
                   </div>
                   <div>
                     <ion-button style="--border-radius: 0 0 1em 1em;" color="primary" shape="rectangle" expand="block">Beli</ion-button>
                   </div>
                 </div>
-                <div class="card" *ngIf="i % 2 === 1">
+                <div class="card" *ngIf="i % 2 === 1" (click)="openProdukDetailModal(1)">
                   <div class="card-image">
                     <ion-img class="produk-image" src="https://peken.desabengkel.id/wp-content/uploads/2020/04/Jeruk-Mandarin-Pixabay-1536x1024.jpg"></ion-img>
                   </div>
                   <div class="card-detail">
                     <ion-text style="font-size: 16px;" class="max-lines-1"><b>Jeruk Sunpride</b></ion-text>
                     <ion-text style="font-size: 12px; margin-bottom: 0.5rem;" class="max-lines-2">Jeruk segar yang diambil langsung dari perkebunan dengan pupuk dan perawatan terbaik</ion-text>
-                    <ion-text style="font-size: 14px;" color="primary"><b>Rp.45.000</b></ion-text><ion-text style="font-size: 14px;">/kg</ion-text>
+                    <ion-text style="font-size: 14px;" color="primary"><b>Rp45.000</b></ion-text><ion-text style="font-size: 14px;">/kg</ion-text>
                   </div>
                   <div>
                     <ion-button style="--border-radius: 0 0 1em 1em;" color="primary" shape="rectangle" expand="block">Beli</ion-button>
@@ -85,9 +85,9 @@
   </ion-grid>
 
   <!-- Floating Action Button -->
-  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+  <ion-fab style="padding: 1vw;" horizontal="end" vertical="bottom" slot="fixed">
     <ion-fab-button size="small" color="primary">
-      <ion-icon md="caret-up" ios="chevron-up-circle-outline"></ion-icon>
+      <ion-icon name="call-outline"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
       <ion-fab-button color="danger">

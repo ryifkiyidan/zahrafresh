@@ -18,17 +18,22 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 // Import LocalStorage Module
 import { IonicStorageModule } from '@ionic/storage-angular';
 
+// Import Component
+import { ProdukDetailModalComponent } from './components/produk-detail-modal/produk-detail-modal.component';
+import { SwiperModule } from 'swiper/angular';
+
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ProdukDetailModalComponent],
   entryComponents: [],
   imports: [
-    BrowserModule,
+  BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    SwiperModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

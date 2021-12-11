@@ -1,0 +1,14 @@
+ion-grid ion-row ion-col {
+  height: 100%;
+}
+
+ion-card {
+  border-bottom: 5px solid var(--ion-color-primary);
+}
+
+.input-container {
+  border-radius: 2em;
+  background-color: var(--ion-color-light);
+  padding: 0.1em 0.75em;
+  margin-top: 0.5em;
+}

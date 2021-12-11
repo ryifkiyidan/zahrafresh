@@ -1,0 +1,45 @@
+<ion-content class="ion-padding" fullscreen="true">
+  <div class="ion-margin-vertical" style="display: flex; flex-flow: row wrap; justify-content: space-between;">
+    <div style="display: flex; align-items: center;">
+      <ion-text>
+        <h4 class="ion-no-margin"><b>Produk Detail</b></h4>
+      </ion-text>
+    </div>
+    <ion-button shape="round" slot="end" size="small" fill="clear" (click)="goBack()">
+      <ion-icon name="close" slot="icon-only"></ion-icon>
+    </ion-button>
+  </div>
+
+  <!-- Image Slide -->
+  <swiper #swiper [config]="config">
+    <ng-template swiperSlide>
+      <ion-img class="swiper-image" src="https://media.glassdoor.com/l/d2/0d/c1/b9/produce-department-at-the-fresh-market.jpg"></ion-img>
+    </ng-template>
+    <ng-template swiperSlide>
+      <ion-img class="swiper-image" src="https://img3.mashed.com/img/gallery/why-you-should-rethink-eating-so-much-dried-fruit/l-intro-1611324659.jpg"></ion-img>
+    </ng-template>
+    <ng-template swiperSlide>
+      <ion-img class="swiper-image" src="https://www.ooooby.org/image/product/nfs/8db453ea-0a78-48ba-a2a0-c17b09979bbe.jpg"></ion-img>
+    </ng-template>
+  </swiper>
+
+  <div class="ion-padding-vertical">
+    <ion-text style="font-size: 18px;">
+      <b>Jeruk Sunpride</b>
+    </ion-text>
+
+    <ion-text style="font-size: 16px;">
+      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque quasi assumenda rerum velit voluptates!</p>
+    </ion-text>
+
+    <div style="display: flex; flex-flow: row wrap; justify-content: space-between; align-items: center;">
+      <div>
+        <ion-text style="font-size: 18px;" color="primary"><b>Rp30.000</b></ion-text><ion-text style="font-size: 14px;">/kg</ion-text>
+      </div>
+      <div style="width: 130px;">
+        <ion-button expand="block" color="primary" shape="round">Beli</ion-button>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

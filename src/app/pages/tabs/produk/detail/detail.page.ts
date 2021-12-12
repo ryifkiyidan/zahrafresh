@@ -48,7 +48,7 @@ export class DetailPage implements OnInit, AfterContentChecked {
     }
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.activatedRoute.paramMap.subscribe(paramMap => {
       if (paramMap.has('key')) {
         this.produkKey = paramMap.get('key');
@@ -61,7 +61,10 @@ export class DetailPage implements OnInit, AfterContentChecked {
         this.navController.pop();
       }
     });
-    await this.keranjangService.getKeranjangs().then(res => { this.keranjangs = res; console.log(res);} );
+  }
+
+  async ionViewWillEnter(){
+    await this.keranjangService.getKeranjangs().then(res => this.keranjangs = res);
   }
 
   tambah(){

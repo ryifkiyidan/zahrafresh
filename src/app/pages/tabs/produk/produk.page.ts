@@ -48,7 +48,7 @@ export class ProdukPage implements OnInit, AfterContentChecked {
     }
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.produkSubscription = this.produkService.getAll().snapshotChanges().pipe(
       map(changes =>
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() as Produk }))
@@ -57,7 +57,10 @@ export class ProdukPage implements OnInit, AfterContentChecked {
       this.produks = res;
       this.produksBackup = this.produks;
     });
-    await this.keranjangService.getKeranjangs().then(res => { this.keranjangs = res; console.log(res);} );
+  }
+
+  async ionViewWillEnter(){
+    await this.keranjangService.getKeranjangs().then(res => this.keranjangs = res);
   }
 
   searchProduk(ev){

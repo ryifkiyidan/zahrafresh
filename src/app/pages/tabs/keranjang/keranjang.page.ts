@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { Keranjang } from 'src/app/models/keranjang.model';
+import { KeranjangService } from 'src/app/services/keranjang.service';
 
 @Component({
   selector: 'app-keranjang',
@@ -9,11 +11,13 @@ import { AlertController } from '@ionic/angular';
 })
 export class KeranjangPage implements OnInit {
 
+  keranjangs?: Keranjang[];
   keranjangForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private alertController: AlertController,
+    private keranjangService: KeranjangService,
   ) { }
 
   ngOnInit() {
@@ -31,6 +35,55 @@ export class KeranjangPage implements OnInit {
         Validators.required,
       ])),
     });
+  }
+
+  async ionViewWillEnter(){
+    await this.keranjangService.getKeranjangs().then(res => this.keranjangs = res);
+  }
+
+  tambah(id: number){
+    const keranjang = this.keranjangs.find(item => item.produk.id === id);
+    const newKeranjangs = this.keranjangService.tambahProduk(this.keranjangs, keranjang.produk);
+    this.keranjangs = newKeranjangs;
+    this.keranjangService.setKeranjangs(this.keranjangs);
+  }
+
+  kurang(id: number){
+    const keranjang = this.keranjangs.find(item => item.produk.id === id);
+    const newKeranjangs = this.keranjangService.kurangProduk(this.keranjangs, keranjang.produk);
+    this.keranjangs = newKeranjangs;
+    this.keranjangService.setKeranjangs(this.keranjangs);
+  }
+
+  isAddedToCart(id: number){
+    if(this.keranjangs){
+      return this.keranjangs.find(item => item.produk.id === id) ? true : false;
+    }else{
+      return false;
+    }
+  }
+
+  getQtyProduct(id: number){
+    const keranjang = this.keranjangs.find(item => item.produk.id === id);
+    return keranjang.jumlah;
+  }
+
+  getTotalHargaKeranjang(){
+    let total = 0;
+    this.keranjangs.forEach(keranjang => {
+      total += keranjang.totalHarga;
+    });
+    return total;
+  }
+
+  openUrl(url){
+    window.open(encodeURI(url));
+  }
+
+  rupiahFormat(value: number){
+    const reverse = value.toString().split('').reverse().join('');
+    const ribuan = reverse.match(/\d{1,3}/g).join('.').split('').reverse().join('');
+    return ribuan;
   }
 
   async presentAlertConfirm() {

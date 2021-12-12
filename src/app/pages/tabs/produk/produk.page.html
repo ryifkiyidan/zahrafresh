@@ -39,6 +39,12 @@
           <ng-template swiperSlide>
             <ion-img class="swiper-image" src="assets/images/slide3.jpg"></ion-img>
           </ng-template>
+          <ng-template swiperSlide>
+            <ion-img class="swiper-image" src="assets/images/slide4.jpg"></ion-img>
+          </ng-template>
+          <ng-template swiperSlide>
+            <ion-img class="swiper-image" src="assets/images/slide5.jpg"></ion-img>
+          </ng-template>
         </swiper>
 
         <div class="produk-container" *ngIf="produks">
@@ -135,7 +141,7 @@
           </div>
           <div><b>Rp{{ rupiahFormat(getTotalHargaKeranjang()) }}</b></div>
           <ion-buttons slot="end">
-            <ion-button>LANJUT</ion-button>
+            <ion-button routerLink="/tabs/keranjang">LANJUT</ion-button>
           </ion-buttons>
         </ion-item>
       </ion-col>

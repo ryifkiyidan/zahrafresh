@@ -24,8 +24,6 @@ export class AppComponent {
       const keranjangs = await this.localStorage?.get('keranjangs').then((res) => res);
       if(!keranjangs){
         await this.localStorage?.set('keranjangs', []);
-      }else{
-        console.log(keranjangs);
       }
     } catch(err) {
       console.error(err);

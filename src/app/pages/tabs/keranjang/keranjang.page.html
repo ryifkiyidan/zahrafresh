@@ -97,14 +97,6 @@
             <ion-card-content>
               <ion-list mode="md">
                 <ion-item>
-                  <ion-label position="floating">Nama Penerima</ion-label>
-                  <ion-input type="text" formControlName="namaPenerima" placeholder="Nama Penerima"></ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-label position="floating">Nomor Penerima</ion-label>
-                  <ion-input type="number" formControlName="nomorPenerima" placeholder="Nomor Penerima"></ion-input>
-                </ion-item>
-                <ion-item>
                   <ion-label>Kota/Kabupaten</ion-label>
                   <ion-select interface="action-sheet">
                     <ion-select-option value="nes">NES</ion-select-option>
@@ -127,13 +119,32 @@
                   </ion-select>
                 </ion-item>
                 <ion-item>
+                  <ion-label>Kelurahan</ion-label>
+                  <ion-select interface="action-sheet">
+                    <ion-select-option value="nes">NES</ion-select-option>
+                    <ion-select-option value="n64">Nintendo64</ion-select-option>
+                    <ion-select-option value="ps">PlayStation</ion-select-option>
+                    <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+                    <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+                    <ion-select-option value="snes">SNES</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <ion-item>
                   <ion-label position="floating">Nama Jalan</ion-label>
                   <ion-textarea placeholder="Nama Jalan"></ion-textarea>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Nama Penerima</ion-label>
+                  <ion-input type="text" formControlName="namaPenerima" placeholder="Nama Penerima"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Nomor Penerima</ion-label>
+                  <ion-input type="number" formControlName="nomorPenerima" placeholder="Nomor Penerima"></ion-input>
                 </ion-item>
               </ion-list>
             </ion-card-content>
           </ion-card>
-          <ion-button class="ion-margin" type="submit" color="primary" expand="block" shape="round">Checkout <ion-icon name="logo-whatsapp" slot="end"></ion-icon></ion-button>
+          <ion-button class="ion-margin" type="submit" color="primary" expand="block" shape="round" (click)="presentAlertConfirm()">Checkout <ion-icon name="logo-whatsapp" slot="end"></ion-icon></ion-button>
         </form>
       </ion-col>
     </ion-row>

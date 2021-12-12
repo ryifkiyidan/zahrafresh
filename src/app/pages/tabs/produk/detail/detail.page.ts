@@ -61,14 +61,15 @@ export class DetailPage implements OnInit, AfterContentChecked {
   async copyLink(){
     // eslint-disable-next-line id-blacklist
     await Clipboard.write({string: this.currentPageUrl});
-    await this.presentToast('Link produk tersalin ke clipboard');
+    await this.presentToast('Link produk telah disalin');
   }
 
   async presentToast(msg) {
     const toast = await this.toastController.create({
       message: msg,
       duration: 2000,
-      color: 'primary',
+      color: 'light',
+      position: 'top',
     });
     toast.present();
   }

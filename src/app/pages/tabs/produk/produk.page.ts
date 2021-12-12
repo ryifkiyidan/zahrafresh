@@ -31,7 +31,7 @@ export class ProdukPage implements OnInit, AfterContentChecked {
     pagination: {clickable: true},
     initialSlide: 0,
     loop: true,
-    autoplay: {delay: 3000},
+    autoplay: {delay: 4000},
   };
 
   constructor(
@@ -75,6 +75,10 @@ export class ProdukPage implements OnInit, AfterContentChecked {
 
   onClick(){
     console.log('click');
+  }
+
+  openUrl(url){
+    window.open(encodeURI(url));
   }
 
   rupiahFormat(value: number){

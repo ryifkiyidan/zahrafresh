@@ -8,8 +8,8 @@
           </ion-buttons>
           <ion-title>{{ produk?.nama }}</ion-title>
           <ion-buttons slot="end">
-            <ion-button size="small" (click)="copyLink()">
-              <ion-icon name="clipboard-outline" slot="icon-only"></ion-icon>
+            <ion-button shape="round" (click)="copyLink()">
+              <i class="far fa-copy" style="font-size: 24px;"></i>
             </ion-button>
           </ion-buttons>
         </ion-toolbar>
@@ -44,7 +44,18 @@
               <ion-text style="font-size: 18px;" color="primary"><b>Rp{{ rupiahFormat(produk?.harga) }}</b></ion-text><ion-text style="font-size: 14px;">/kg</ion-text>
             </div>
             <div style="width: 130px;">
-              <ion-button expand="block" color="primary" shape="round">Beli</ion-button>
+              <ion-button *ngIf="true" expand="block" color="primary" shape="round">Beli</ion-button>
+              <ion-buttons *ngIf="false" slot="end" class="ion-no-margin">
+                <ion-button color="primary" size="small">
+                  <ion-icon name="remove" slot="icon-only"></ion-icon>
+                </ion-button>
+                <div style="margin: 0 0.5rem;">
+                  <ion-text style="font-size: 14px;"><b>1</b></ion-text>
+                </div>
+                <ion-button color="primary" size="small">
+                  <ion-icon name="add" slot="icon-only"></ion-icon>
+                </ion-button>
+              </ion-buttons>
             </div>
           </div>
         </div>

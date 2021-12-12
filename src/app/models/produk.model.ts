@@ -6,6 +6,7 @@ export interface Produk {
   harga:      number;
   deskripsi:  string;
   isReady:    boolean;
+  diskon:     number;
   gambar:     string[];
   category:   Category;
 }

@@ -7,6 +7,8 @@ import { ProdukService } from 'src/app/services/produk.service';
 import { SwiperOptions } from 'swiper';
 import { SwiperComponent } from 'swiper/angular';
 import { Clipboard } from '@capacitor/clipboard';
+import { Keranjang } from 'src/app/models/keranjang.model';
+import { KeranjangService } from 'src/app/services/keranjang.service';
 
 @Component({
   selector: 'app-detail',
@@ -23,6 +25,8 @@ export class DetailPage implements OnInit, AfterContentChecked {
   produkBackup: Produk;
   currentPageUrl: string;
 
+  keranjangs?: Keranjang[];
+
   config: SwiperOptions = {
     slidesPerView: 1,
     pagination: {clickable: true},
@@ -35,6 +39,7 @@ export class DetailPage implements OnInit, AfterContentChecked {
     private navController: NavController,
     private toastController: ToastController,
     private produkService: ProdukService,
+    private keranjangService: KeranjangService,
   ) { }
 
   ngAfterContentChecked(){
@@ -43,7 +48,7 @@ export class DetailPage implements OnInit, AfterContentChecked {
     }
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.activatedRoute.paramMap.subscribe(paramMap => {
       if (paramMap.has('key')) {
         this.produkKey = paramMap.get('key');
@@ -56,6 +61,40 @@ export class DetailPage implements OnInit, AfterContentChecked {
         this.navController.pop();
       }
     });
+    await this.keranjangService.getKeranjangs().then(res => { this.keranjangs = res; console.log(res);} );
+  }
+
+  tambah(){
+    const newKeranjangs = this.keranjangService.tambahProduk(this.keranjangs, this.produk);
+    this.keranjangs = newKeranjangs;
+    this.keranjangService.setKeranjangs(this.keranjangs);
+  }
+
+  kurang(){
+    const newKeranjangs = this.keranjangService.kurangProduk(this.keranjangs, this.produk);
+    this.keranjangs = newKeranjangs;
+    this.keranjangService.setKeranjangs(this.keranjangs);
+  }
+
+  isAddedToCart(){
+    if(this.keranjangs && this.produk){
+      return this.keranjangs.find(item => item.produk.id === this.produk.id) ? true : false;
+    }else{
+      return false;
+    }
+  }
+
+  getQtyProduct(){
+    const keranjang = this.keranjangs.find(item => item.produk.id === this.produk.id);
+    return keranjang.jumlah;
+  }
+
+  getTotalHargaKeranjang(){
+    let total = 0;
+    this.keranjangs.forEach(keranjang => {
+      total += keranjang.totalHarga;
+    });
+    return total;
   }
 
   async copyLink(){

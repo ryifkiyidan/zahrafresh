@@ -6,3 +6,20 @@ swiper {
   width: 100%;
   aspect-ratio: 16/9;
 }
+.produk-harga {
+  font-size: 0.85rem;
+  text-decoration: line-through;
+}
+.produk-diskon-tag {
+  font-size: 0.65rem;
+  background-color: var(--ion-color-danger);
+  border-radius: 0.25rem;
+  padding: 0.1rem 0.15rem;
+  margin-left: 0.25rem;
+}
+.produk-harga-final {
+  font-size: 1.15rem;
+}
+.produk-unit {
+  font-size: 0.85rem;
+}

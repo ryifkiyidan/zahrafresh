@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { Produk } from './../../../models/produk.model';
 import { ProdukService } from './../../../services/produk.service';
-import { NavController } from '@ionic/angular';
 import { KeranjangService } from 'src/app/services/keranjang.service';
 import { Keranjang } from 'src/app/models/keranjang.model';
 
@@ -25,7 +24,6 @@ export class ProdukPage implements OnInit, AfterContentChecked {
   @ViewChild('swiper') swiper: SwiperComponent;
 
   produkSubscription: Subscription;
-  keranjangSubscription: Subscription;
 
   produks?: Produk[];
   produksBackup?: Produk[];
@@ -41,7 +39,6 @@ export class ProdukPage implements OnInit, AfterContentChecked {
 
   constructor(
     private produkService: ProdukService,
-    private navController: NavController,
     private keranjangService: KeranjangService,
   ) { }
 
@@ -95,7 +92,11 @@ export class ProdukPage implements OnInit, AfterContentChecked {
   }
 
   isAddedToCart(id: number){
-    return this.keranjangs.find(item => item.produk.id === id) ? true : false;
+    if(this.keranjangs && this.produks){
+      return this.keranjangs.find(item => item.produk.id === id) ? true : false;
+    }else{
+      return false;
+    }
   }
 
   getQtyProduct(id: number){

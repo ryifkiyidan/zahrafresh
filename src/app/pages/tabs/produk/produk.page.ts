@@ -6,6 +6,8 @@ import {map} from 'rxjs/operators';
 import { Produk } from './../../../models/produk.model';
 import { ProdukService } from './../../../services/produk.service';
 import { NavController } from '@ionic/angular';
+import { KeranjangService } from 'src/app/services/keranjang.service';
+import { Keranjang } from 'src/app/models/keranjang.model';
 
 
 SwiperCore.use([
@@ -22,9 +24,12 @@ export class ProdukPage implements OnInit, AfterContentChecked {
 
   @ViewChild('swiper') swiper: SwiperComponent;
 
-  subscription: Subscription;
+  produkSubscription: Subscription;
+  keranjangSubscription: Subscription;
+
   produks?: Produk[];
   produksBackup?: Produk[];
+  keranjangs?: Keranjang[];
 
   config: SwiperOptions = {
     slidesPerView: 1,
@@ -36,7 +41,8 @@ export class ProdukPage implements OnInit, AfterContentChecked {
 
   constructor(
     private produkService: ProdukService,
-    private navController: NavController
+    private navController: NavController,
+    private keranjangService: KeranjangService,
   ) { }
 
   ngAfterContentChecked(){
@@ -45,8 +51,8 @@ export class ProdukPage implements OnInit, AfterContentChecked {
     }
   }
 
-  ngOnInit() {
-    this.subscription = this.produkService.getAll().snapshotChanges().pipe(
+  async ngOnInit() {
+    this.produkSubscription = this.produkService.getAll().snapshotChanges().pipe(
       map(changes =>
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() as Produk }))
       )
@@ -54,6 +60,7 @@ export class ProdukPage implements OnInit, AfterContentChecked {
       this.produks = res;
       this.produksBackup = this.produks;
     });
+    await this.keranjangService.getKeranjangs().then(res => { this.keranjangs = res; console.log(res);} );
   }
 
   searchProduk(ev){
@@ -73,8 +80,35 @@ export class ProdukPage implements OnInit, AfterContentChecked {
     });
   }
 
-  onClick(){
-    console.log('click');
+  tambah(id: number){
+    const produk = this.produks.find(item => item.id === id);
+    const newKeranjangs = this.keranjangService.tambahProduk(this.keranjangs, produk);
+    this.keranjangs = newKeranjangs;
+    this.keranjangService.setKeranjangs(this.keranjangs);
+  }
+
+  kurang(id: number){
+    const produk = this.produks.find(item => item.id === id);
+    const newKeranjangs = this.keranjangService.kurangProduk(this.keranjangs, produk);
+    this.keranjangs = newKeranjangs;
+    this.keranjangService.setKeranjangs(this.keranjangs);
+  }
+
+  isAddedToCart(id: number){
+    return this.keranjangs.find(item => item.produk.id === id) ? true : false;
+  }
+
+  getQtyProduct(id: number){
+    const keranjang = this.keranjangs.find(item => item.produk.id === id);
+    return keranjang.jumlah;
+  }
+
+  getTotalHargaKeranjang(){
+    let total = 0;
+    this.keranjangs.forEach(keranjang => {
+      total += keranjang.totalHarga;
+    });
+    return total;
   }
 
   openUrl(url){
@@ -88,7 +122,7 @@ export class ProdukPage implements OnInit, AfterContentChecked {
   }
 
   ionViewDidLeave() {
-    this.subscription.unsubscribe();
+    this.produkSubscription.unsubscribe();
   }
 
 }

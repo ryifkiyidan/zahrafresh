@@ -20,11 +20,11 @@
     <ion-row class="ion-no-padding">
       <ion-col sizeXs="12" sizeSm="8" offsetSm="2" sizeMd="8" offsetMd="2" sizeLg="8" offsetLg="2">
         <div class="ion-padding header-container">
-          <ion-text color="primary">
-            <h1 class="ion-no-margin"><b>Zahra Fresh</b></h1>
-          </ion-text>
+          <div>
+            <ion-img style="width: 25vh; height: 100%; cursor: pointer;" (click)="openUrl('https://zahrafresh.com')" src="assets/images/header-logo.png"></ion-img>
+          </div>
 
-          <div style="display: flex; align-items: center;">
+          <div style="display: flex; align-items: flex-end;">
             <ion-button size="small" fill="clear" shape="round" routerLink="../akun"><ion-icon name="person" slot="start"></ion-icon> Login</ion-button>
           </div>
         </div>
@@ -39,32 +39,45 @@
           <ng-template swiperSlide>
             <ion-img class="swiper-image" src="assets/images/slide3.jpg"></ion-img>
           </ng-template>
-          <!-- <ng-template swiperSlide>
-            <ion-img class="swiper-image" src="assets/images/tokopedia.png"></ion-img>
-          </ng-template>
-          <ng-template swiperSlide>
-            <ion-img class="swiper-image" src="assets/images/shopee.png"></ion-img>
-          </ng-template> -->
         </swiper>
 
         <div class="produk-container" *ngIf="produks">
-          <ion-text>
-            <h4 style="margin: 0; padding: 1rem 1rem 0 1rem;">Produk</h4>
-          </ion-text>
+          <div style="display: flex; flex-flow: row wrap; justify-content: space-between; align-items: center;">
+            <div style="display: flex; flex-flow: row wrap; align-items: center;">
+              <ion-text>
+                <h4 style="margin: 0; padding-left: 1rem;">Produk</h4>
+              </ion-text>
+            </div>
+
+            <div class="ecom-logo-container">
+              <div style="padding-right: 0.5rem">
+                <img class="ecom-logo" src="assets/images/tokopedia-logo.png" (click)="openUrl('https://www.tokopedia.com/zahrafruit')" />
+              </div>
+              <div style="margin-right: 1rem">
+                <img class="ecom-logo" src="assets/images/shopee-logo.png" (click)="openUrl('https://shopee.co.id/zahrafruitmart')" />
+              </div>
+            </div>
+          </div>
           <!-- Produk -->
           <ion-grid class="ion-no-padding">
             <ion-row *ngIf="produks.length > 0">
               <ion-col class="card-container" sizeXs="6" sizeSm="6" sizeMd="4" sizeLg="4" sizeXl="3" *ngFor="let produk of produks">
-                <div style="display: flex; flex-flow: column wrap; justify-content: center; align-items: center;">
+                <div style="display: flex; flex-flow: column wrap; justify-content: center; align-items: center; padding: 0.5rem 0;">
                   <div routerLink="detail/{{ produk.key }}">
                     <div class="card-image">
                       <ion-img class="produk-image" src="{{ produk.gambar[0] }}"></ion-img>
                     </div>
                     <div class="card-detail">
                       <ion-text class="produk-nama max-lines-1"><b>{{ produk.nama }}</b></ion-text>
-                      <ion-text class="produk-harga-final" color="primary"><b>Rp{{ rupiahFormat(produk.harga * (100 - produk.diskon) / 100) }}</b></ion-text><ion-text class="produk-unit">/kg</ion-text>
-                      <ion-text *ngIf="produk.diskon !== 0" class="produk-harga" color="medium">Rp{{ rupiahFormat(produk.harga) }}</ion-text>
-                      <ion-text *ngIf="produk.diskon !== 0" class="produk-diskon-tag" color="light"><b>{{ produk.diskon }}%</b></ion-text>
+                      <div style="display: flex; flex-flow: column wrap;">
+                        <div>
+                          <ion-text *ngIf="produk.diskon !== 0" class="produk-harga" color="medium">Rp{{ rupiahFormat(produk.harga) }}</ion-text>
+                          <ion-text *ngIf="produk.diskon !== 0" class="produk-diskon-tag" color="light"><b>{{ produk.diskon }}%</b></ion-text>
+                        </div>
+                        <div>
+                          <ion-text class="produk-harga-final" color="primary"><b>Rp{{ rupiahFormat(produk.harga * (100 - produk.diskon) / 100) }}</b></ion-text><ion-text class="produk-unit">/kg</ion-text>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <ion-button *ngIf="true" (click)="onClick()" style="--border-radius: 0 0 1em 1em; width: 100%; margin: 0;" color="primary" shape="rectangle" expand="block">Beli</ion-button>

@@ -69,7 +69,6 @@ ion-toolbar {
 }
 
 .produk-harga {
-  margin-left: 0.5rem;
   font-size: 0.75rem;
   text-decoration: line-through;
 }
@@ -99,12 +98,26 @@ ion-toolbar {
 
 .card-detail {
   padding: 1rem 0;
+  min-height: 100px;
 }
 
 .produk-image {
   object-fit: cover;
   width: 100%;
   aspect-ratio: 4/3;
+}
+
+.ecom-logo {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50% !important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.ecom-logo-container {
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .max-lines-1 {

@@ -18,12 +18,10 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 // Import LocalStorage Module
 import { IonicStorageModule } from '@ionic/storage-angular';
 
-// Import Component
-import { ProdukDetailModalComponent } from './components/produk-detail-modal/produk-detail-modal.component';
 import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
-  declarations: [AppComponent, ProdukDetailModalComponent],
+  declarations: [AppComponent],
   entryComponents: [],
   imports: [
   BrowserModule,

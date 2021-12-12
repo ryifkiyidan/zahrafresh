@@ -7,6 +7,7 @@
             color="light"
             placeholder="Belanja apa hari ini..."
             mode="md"
+            (ionInput)="searchProduk($event)"
           ></ion-searchbar>
         </ion-col>
       </ion-row>
@@ -46,10 +47,10 @@
           </ion-text>
           <!-- Produk -->
           <ion-grid>
-            <ion-row>
+            <ion-row *ngIf="produks.length > 0">
               <ion-col class="card-container" sizeXs="6" sizeSm="6" sizeMd="4" sizeLg="4" sizeXl="3" *ngFor="let produk of produks">
                 <div>
-                  <div (click)="openProdukDetailModal(produk.id)">
+                  <div routerLink="detail/{{ produk.key }}">
                     <div class="card-image">
                       <ion-img class="produk-image" src="{{ produk.gambar[0] }}"></ion-img>
                     </div>
@@ -63,9 +64,14 @@
                 </div>
               </ion-col>
             </ion-row>
+            <ion-row *ngIf="produks.length < 1" style="display: flex; justify-content: center; align-items: center;">
+              <ion-col class="card-container" sizeXs="6" sizeSm="6" sizeMd="4" sizeLg="4" sizeXl="3">
+                <ion-img class="ion-padding ion-margin-bottom" src="assets/unDraw/not_found.svg"></ion-img>
+                <ion-text>Produk tidak ditemukan</ion-text>
+              </ion-col>
+            </ion-row>
           </ion-grid>
         </div>
-
 
       </ion-col>
     </ion-row>

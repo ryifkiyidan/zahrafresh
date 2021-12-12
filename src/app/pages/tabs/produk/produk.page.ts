@@ -1,12 +1,11 @@
 import { AfterContentChecked, Component, OnInit, ViewChild } from '@angular/core';
 import { SwiperComponent } from 'swiper/angular';
 import SwiperCore, { SwiperOptions, Pagination, Autoplay } from 'swiper';
-import { ModalController } from '@ionic/angular';
-import { ProdukDetailModalComponent } from './../../../components/produk-detail-modal/produk-detail-modal.component';
 import { Subscription } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { Produk } from './../../../models/produk.model';
 import { ProdukService } from './../../../services/produk.service';
+import { NavController } from '@ionic/angular';
 
 
 SwiperCore.use([
@@ -36,8 +35,8 @@ export class ProdukPage implements OnInit, AfterContentChecked {
   };
 
   constructor(
-    private modalController: ModalController,
-    private produkService: ProdukService
+    private produkService: ProdukService,
+    private navController: NavController
   ) { }
 
   ngAfterContentChecked(){
@@ -57,14 +56,21 @@ export class ProdukPage implements OnInit, AfterContentChecked {
     });
   }
 
-  async openProdukDetailModal(key){
-    const modal = await this.modalController.create({
-      component: ProdukDetailModalComponent,
-      // componentProps: {
-      //   apartemen: this.apartemens.find(res => res.key === key)
-      // }
+  searchProduk(ev){
+    this.produks = this.produksBackup;
+    const keyword = ev.srcElement.value;
+    if (!keyword){
+      return;
+    }
+
+    this.produks = this.produks.filter(produk => {
+      if (produk.nama && keyword) {
+        return (
+          produk.nama.toLowerCase().indexOf(keyword.toLowerCase()) > -1 ||
+          produk.deskripsi.toLowerCase().indexOf(keyword.toLowerCase()) > -1
+        );
+      }
     });
-    await modal.present();
   }
 
   onClick(){
@@ -75,6 +81,10 @@ export class ProdukPage implements OnInit, AfterContentChecked {
     const reverse = value.toString().split('').reverse().join('');
     const ribuan = reverse.match(/\d{1,3}/g).join('.').split('').reverse().join('');
     return ribuan;
+  }
+
+  ionViewDidLeave() {
+    this.subscription.unsubscribe();
   }
 
 }

@@ -73,6 +73,14 @@ export class DetailPage implements OnInit, AfterContentChecked {
     toast.present();
   }
 
+  rupiahFormat(value?: number){
+    if(value){
+      const reverse = value.toString().split('').reverse().join('');
+      const ribuan = reverse.match(/\d{1,3}/g).join('.').split('').reverse().join('');
+      return ribuan;
+    }
+  }
+
   ionViewDidLeave() {
     this.subscription.unsubscribe();
   }

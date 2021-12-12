@@ -30,49 +30,36 @@
         <!-- Image Slide -->
         <swiper #swiper [config]="config">
           <ng-template swiperSlide>
-            <ion-img class="swiper-image" src="https://media.glassdoor.com/l/d2/0d/c1/b9/produce-department-at-the-fresh-market.jpg"></ion-img>
+            <ion-img class="swiper-image" src="assets/images/slide1.jpg"></ion-img>
           </ng-template>
           <ng-template swiperSlide>
-            <ion-img class="swiper-image" src="https://img3.mashed.com/img/gallery/why-you-should-rethink-eating-so-much-dried-fruit/l-intro-1611324659.jpg"></ion-img>
+            <ion-img class="swiper-image" src="assets/images/slide2.jpg"></ion-img>
           </ng-template>
           <ng-template swiperSlide>
-            <ion-img class="swiper-image" src="https://www.ooooby.org/image/product/nfs/8db453ea-0a78-48ba-a2a0-c17b09979bbe.jpg"></ion-img>
+            <ion-img class="swiper-image" src="assets/images/slide3.jpg"></ion-img>
           </ng-template>
         </swiper>
 
-        <div class="produk-container">
+        <div class="produk-container" *ngIf="produks">
           <ion-text>
             <h4 style="margin: 0; padding: 1rem 1rem 0 1rem;"><b>Produk</b></h4>
           </ion-text>
           <!-- Produk -->
           <ion-grid>
             <ion-row>
-              <ion-col sizeXs="6" sizeSm="6" sizeMd="4" sizeLg="4" sizeXl="3" *ngFor="let item of [].constructor(10); let i = index">
-                <div class="card" *ngIf="i % 2 === 0" (click)="openProdukDetailModal(1)">
-                  <div class="card-image">
-                    <ion-img class="produk-image" src="https://duniasegar.com/wp-content/uploads/2020/07/20200628_1326.edt2_-1536x1004.jpg"></ion-img>
+              <ion-col class="card-container" sizeXs="6" sizeSm="6" sizeMd="4" sizeLg="4" sizeXl="3" *ngFor="let produk of produks">
+                <div>
+                  <div (click)="openProdukDetailModal(produk.id)">
+                    <div class="card-image">
+                      <ion-img class="produk-image" src="{{ produk.gambar[0] }}"></ion-img>
+                    </div>
+                    <div class="card-detail">
+                      <ion-text style="font-size: 16px;" class="max-lines-1"><b>{{ produk.nama }}</b></ion-text>
+                      <ion-text style="font-size: 12px; margin-bottom: 0.5rem;" class="max-lines-2">{{ produk.deskripsi }}</ion-text>
+                      <ion-text style="font-size: 14px;" color="primary"><b>Rp{{ rupiahFormat(produk.harga) }}</b></ion-text><ion-text style="font-size: 14px;">/kg</ion-text>
+                    </div>
                   </div>
-                  <div class="card-detail">
-                    <ion-text style="font-size: 16px;" class="max-lines-1"><b>Apel Sunpride</b></ion-text>
-                    <ion-text style="font-size: 12px; margin-bottom: 0.5rem;" class="max-lines-2">Apel segar yang diambil langsung dari perkebunan</ion-text>
-                    <ion-text style="font-size: 14px;" color="primary"><b>Rp30.000</b></ion-text><ion-text style="font-size: 14px;">/kg</ion-text>
-                  </div>
-                  <div>
-                    <ion-button style="--border-radius: 0 0 1em 1em;" color="primary" shape="rectangle" expand="block">Beli</ion-button>
-                  </div>
-                </div>
-                <div class="card" *ngIf="i % 2 === 1" (click)="openProdukDetailModal(1)">
-                  <div class="card-image">
-                    <ion-img class="produk-image" src="https://peken.desabengkel.id/wp-content/uploads/2020/04/Jeruk-Mandarin-Pixabay-1536x1024.jpg"></ion-img>
-                  </div>
-                  <div class="card-detail">
-                    <ion-text style="font-size: 16px;" class="max-lines-1"><b>Jeruk Sunpride</b></ion-text>
-                    <ion-text style="font-size: 12px; margin-bottom: 0.5rem;" class="max-lines-2">Jeruk segar yang diambil langsung dari perkebunan dengan pupuk dan perawatan terbaik</ion-text>
-                    <ion-text style="font-size: 14px;" color="primary"><b>Rp45.000</b></ion-text><ion-text style="font-size: 14px;">/kg</ion-text>
-                  </div>
-                  <div>
-                    <ion-button style="--border-radius: 0 0 1em 1em;" color="primary" shape="rectangle" expand="block">Beli</ion-button>
-                  </div>
+                  <ion-button (click)="onClick()" style="--border-radius: 0 0 1em 1em;" color="primary" shape="rectangle" expand="block">Beli</ion-button>
                 </div>
               </ion-col>
             </ion-row>
@@ -87,7 +74,7 @@
   <!-- Floating Action Button -->
   <ion-fab style="padding: 1vw;" horizontal="end" vertical="bottom" slot="fixed">
     <ion-fab-button size="small" color="primary">
-      <ion-icon name="call-outline"></ion-icon>
+      <i class="fas fa-phone-alt"></i>
     </ion-fab-button>
     <ion-fab-list side="top">
       <ion-fab-button color="danger">

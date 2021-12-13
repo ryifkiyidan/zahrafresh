@@ -1,8 +1,8 @@
-<ion-content [fullscreen]="true" *ngIf="keranjangs">
+<ion-content [fullscreen]="true">
   <ion-grid class="ion-no-padding">
     <ion-row class="ion-no-padding">
       <ion-col sizeXs="12" sizeSm="10" offsetSm="1" sizeMd="8" offsetMd="2" sizeLg="6" offsetLg="3">
-        <form [formGroup]="keranjangForm" *ngIf="keranjangs.length > 0">
+        <form [formGroup]="keranjangForm">
           <div class="ion-padding-horizontal"><h2><b>Keranjang Belanja</b></h2></div>
           <!-- Waktu Pengiriman -->
           <ion-card mode="ios">
@@ -35,7 +35,7 @@
             <ion-card-header>
               <ion-card-title style="font-size: 16px;">Produk</ion-card-title>
             </ion-card-header>
-            <ion-card-content>
+            <ion-card-content *ngIf="keranjangs?.length > 0">
               <!-- <ion-item lines="none" class="ion-margin-bottom">
                 <ion-checkbox #allCheckBox mode="md" color="primary" slot="start" (ionChange)="onChangeAllCheckBox()"></ion-checkbox>
                 <div>
@@ -73,6 +73,13 @@
               <div class="ion-padding" style="display: flex; flex-flow: row wrap; justify-content: space-between;">
                 <ion-text color="primary" style="font-size: 14px;"><b>Total Belanja</b></ion-text>
                 <ion-text color="dark" style="font-size: 16px;">Rp<b>{{ rupiahFormat(getTotalHargaKeranjang()) }}</b></ion-text>
+              </div>
+            </ion-card-content>
+            <ion-card-content *ngIf="keranjangs?.length < 1">
+              <div style="display: flex; flex-flow: column wrap; justify-content: center; align-items: center;">
+                <ion-text><h4>Wah, keranjang belanjamu kosong</h4></ion-text>
+                <ion-text color="medium"><p>Yuk, belanja dulu</p></ion-text>
+                <ion-button size="small" shape="round" routerLink="../produk">Mulai Belanja <ion-icon name="cart-outline" slot="start"></ion-icon></ion-button>
               </div>
             </ion-card-content>
           </ion-card>
@@ -156,14 +163,4 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <div class="centered" *ngIf="keranjangs.length <= 0">
-    <div>
-      <ion-img style="width: 30vh; height: 100%;" src="assets/unDraw/empty_cart.svg"></ion-img>
-    </div>
-    <div class="ion-text-center ion-margin-top">
-      <ion-text color="primary">
-        <p><b>Oops keranjang kamu masih kosong...</b></p>
-      </ion-text>
-    </div>
-  </div>
 </ion-content>

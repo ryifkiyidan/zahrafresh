@@ -56,7 +56,7 @@ export class DetailPage implements OnInit, AfterContentChecked {
           this.produk = res;
           this.produkBackup = this.produk;
         });
-        this.currentPageUrl = 'http://localhost:8100' + this.router.url;
+        this.currentPageUrl = 'https://zahrafresh.com' + this.router.url;
       }else{
         this.navController.pop();
       }

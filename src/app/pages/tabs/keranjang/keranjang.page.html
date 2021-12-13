@@ -36,15 +36,15 @@
               <ion-card-title style="font-size: 16px;">Produk</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-              <ion-item lines="none" class="ion-margin-bottom">
-                <ion-checkbox mode="md" color="primary" slot="start"></ion-checkbox>
+              <!-- <ion-item lines="none" class="ion-margin-bottom">
+                <ion-checkbox #allCheckBox mode="md" color="primary" slot="start" (ionChange)="onChangeAllCheckBox()"></ion-checkbox>
                 <div>
                   <ion-text style="font-size: 14px;"><b>Pilih Semua Produk</b></ion-text>
                 </div>
-              </ion-item>
+              </ion-item> -->
               <ion-list lines="none">
                 <ion-item *ngFor="let keranjang of keranjangs" class="ion-margin-bottom">
-                  <ion-checkbox mode="md" color="primary" slot="start"></ion-checkbox>
+                  <ion-checkbox mode="md" color="primary" slot="start" (ionChange)="onChangeCheckBox(keranjang)" [checked]="isChecked(keranjang)"></ion-checkbox>
                   <div style="display: flex; flex-flow: column wrap;">
                     <ion-text style="font-size: 14px;"><b>{{ keranjang.produk.nama }}</b></ion-text>
                     <div style="display: flex; flex-flow: row wrap;">
@@ -72,7 +72,7 @@
               <hr>
               <div class="ion-padding" style="display: flex; flex-flow: row wrap; justify-content: space-between;">
                 <ion-text color="primary" style="font-size: 14px;"><b>Total Belanja</b></ion-text>
-                <ion-text color="dark" style="font-size: 16px;"><b>{{ getTotalHargaKeranjang() }}</b></ion-text>
+                <ion-text color="dark" style="font-size: 16px;">Rp<b>{{ rupiahFormat(getTotalHargaKeranjang()) }}</b></ion-text>
               </div>
             </ion-card-content>
           </ion-card>

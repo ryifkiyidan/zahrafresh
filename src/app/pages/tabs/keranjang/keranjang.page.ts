@@ -1,8 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, IonCheckbox } from '@ionic/angular';
 import { Keranjang } from 'src/app/models/keranjang.model';
 import { KeranjangService } from 'src/app/services/keranjang.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-keranjang',
@@ -16,12 +18,23 @@ export class KeranjangPage implements OnInit {
   keranjangs?: Keranjang[];
   keranjangForm: FormGroup;
 
-  selectedKeranjang: Keranjang[] = [];
+  waktuPengiriman:  any;
+  currentDate: Date;
+  dateOption1: Date;
+  dateOption2: Date;
+  dateOption3: Date;
+
+  provinsis: any = [];
+  kabupatens: any = [];
+  kecamatans: any = [];
+  kelurahans: any = [];
+  baseHref = 'https://api.binderbyte.com/wilayah/';
 
   constructor(
     private formBuilder: FormBuilder,
     private alertController: AlertController,
     private keranjangService: KeranjangService,
+    private http: HttpClient,
   ) { }
 
   ngOnInit() {
@@ -39,54 +52,77 @@ export class KeranjangPage implements OnInit {
         Validators.required,
       ])),
     });
+    this.getProvinsi();
+    const day = 60 * 60 * 24 * 1000;
+    this.currentDate = new Date();
+    this.dateOption1 = new Date(this.currentDate.getTime() + day);
+    this.dateOption2 = new Date(this.currentDate.getTime() + day + day);
+    this.dateOption3 = new Date(this.currentDate.getTime() + day + day + day);
   }
 
   async ionViewWillEnter(){
     await this.keranjangService.getKeranjangs().then(res => this.keranjangs = res);
   }
 
-  onChangeCheckBox(keranjang: Keranjang){
-
-    const index = this.selectedKeranjang.findIndex(item => item.produk.id === keranjang.produk.id);
-    if (index > -1) {
-      this.selectedKeranjang.splice(index, 1);
-    }else{
-      this.selectedKeranjang.push(keranjang);
-    }
-    console.log(this.selectedKeranjang);
+  getProvinsi(){
+    this.http.get(this.baseHref + 'provinsi?' + 'api_key=' + environment.binderByteKey).subscribe(res => {
+      const tempRes: any = res;
+      this.provinsis = tempRes.value.filter(item => item.id === '36');
+    });
   }
 
-  // onChangeAllCheckBox(){
-  //   if(this.isAllChecked()){
-  //     this.selectedKeranjang = [];
-  //     this.allCheckBox.checked = false;
-  //   }else{
-  //     this.selectedKeranjang = this.keranjangs;
-  //     this.allCheckBox.checked = true;
-  //   }
-  // }
+  getKabupaten(ev){
+    this.http.get(
+        this.baseHref + 'kabupaten?' +
+        'api_key=' + environment.binderByteKey +
+        '&id_provinsi=' + ev.target.value
+      ).subscribe(res => {
+        const tempRes: any = res;
+        this.kabupatens = tempRes.value.filter(item => item.id === '3603' || item.id === '3671' || item.id === '3674');
+      });
+  }
 
-  isChecked(keranjang){
-    const index = this.selectedKeranjang.findIndex(item => item.produk.id === keranjang.produk.id);
-    return index > -1 ? true : false;
+  getKecamatan(ev){
+    this.http.get(
+        this.baseHref + 'kecamatan?' +
+        'api_key=' + environment.binderByteKey +
+        '&id_kabupaten=' + ev.target.value
+      ).subscribe(res => {
+        const tempRes: any = res;
+        this.kecamatans = tempRes.value;
+      });
+  }
+
+  getKelurahan(ev){
+    this.http.get(
+        this.baseHref + 'kelurahan?' +
+        'api_key=' + environment.binderByteKey +
+        '&id_kecamatan=' + ev.target.value
+      ).subscribe(res => {
+        const tempRes: any = res;
+        this.kelurahans = tempRes.value;
+      });
+  }
+
+  onChangeCheckBox(produkId){
+    const index = this.keranjangs.findIndex(keranjang => keranjang.produk.id === produkId);
+    this.keranjangs[index].isChecked = !this.keranjangs[index].isChecked;
+  }
+
+  onClickAllCheckBox(){
+    if(this.allCheckBox.checked){
+      this.keranjangs = this.keranjangs.map(({isChecked, ...rest}) => ({...rest, isChecked: true}));
+    }else{
+      this.keranjangs = this.keranjangs.map(({isChecked, ...rest}) => ({...rest, isChecked: false}));
+    }
   }
 
   isAllChecked(){
-    const flag = this.selectedKeranjang.length === this.keranjangs.length ? true : false;
-    console.log(flag);
-    return flag;
+    return this.keranjangs.every(keranjang => keranjang.isChecked === true);
   }
 
   tambah(id: number){
     const keranjang = this.keranjangs.find(item => item.produk.id === id);
-    const tempKeranjang = {
-      produk: keranjang.produk,
-      jumlah: keranjang.jumlah + 1,
-      totalHarga: (keranjang.produk.harga * (100 - keranjang.produk.diskon) / 100) * (keranjang.jumlah + 1)
-    };
-    const index = this.selectedKeranjang.findIndex(item => item.produk.id === keranjang.produk.id);
-    this.selectedKeranjang[index] = tempKeranjang;
-
     const newKeranjangs = this.keranjangService.tambahProduk(this.keranjangs, keranjang.produk);
     this.keranjangs = newKeranjangs;
     this.keranjangService.setKeranjangs(this.keranjangs);
@@ -94,28 +130,14 @@ export class KeranjangPage implements OnInit {
 
   kurang(id: number){
     const keranjang = this.keranjangs.find(item => item.produk.id === id);
-    if(keranjang.jumlah === 1){
-      this.selectedKeranjang = this.selectedKeranjang.filter(item => item.produk.id !== keranjang.produk.id);
-    }else{
-      const tempKeranjang = {
-        produk: keranjang.produk,
-        jumlah: keranjang.jumlah - 1,
-        totalHarga: (keranjang.produk.harga * (100 - keranjang.produk.diskon) / 100) * (keranjang.jumlah - 1)
-      };
-      const index = this.selectedKeranjang.findIndex(item => item.produk.id === keranjang.produk.id);
-      this.selectedKeranjang[index] = tempKeranjang;
-    }
     const newKeranjangs = this.keranjangService.kurangProduk(this.keranjangs, keranjang.produk);
     this.keranjangs = newKeranjangs;
     this.keranjangService.setKeranjangs(this.keranjangs);
   }
 
-  isAddedToCart(id: number){
-    if(this.keranjangs){
-      return this.keranjangs.find(item => item.produk.id === id) ? true : false;
-    }else{
-      return false;
-    }
+  deleteSelectedProduk(){
+    this.keranjangs = this.keranjangs.filter(keranjang => keranjang.isChecked !== true);
+    this.keranjangService.setKeranjangs(this.keranjangs);
   }
 
   getQtyProduct(id: number){
@@ -123,12 +145,23 @@ export class KeranjangPage implements OnInit {
     return keranjang.jumlah;
   }
 
-  getTotalHargaKeranjang(){
-    let total = 0;
-    this.selectedKeranjang.forEach(keranjang => {
-      total += keranjang.totalHarga;
+  getTotalHarga(type: string){
+    let totalHargaDiskon = 0;
+    let totalHargaAsli = 0;
+    this.keranjangs.forEach(keranjang => {
+      if(keranjang.isChecked){
+        totalHargaDiskon += keranjang.totalHarga;
+        totalHargaAsli += keranjang.totalHargaAsli;
+      }
     });
-    return total;
+    if(type === 'isHaveDiskon'){
+      return totalHargaAsli !== totalHargaDiskon ? 1 : 0;
+    }
+    else if(type === 'diskon'){
+      return totalHargaDiskon;
+    }else{
+      return totalHargaAsli;
+    }
   }
 
   openUrl(url){
@@ -141,11 +174,11 @@ export class KeranjangPage implements OnInit {
     return ribuan;
   }
 
-  async presentAlertConfirm() {
+  async presentAlertConfirm(msg, action) {
     const alert = await this.alertController.create({
       cssClass: 'confirm-alert',
       header: 'Apakah anda yakin?',
-      message: 'Pastikan pesanan dan data pengiriman sudah benar',
+      message: msg,
       buttons: [
         {
           text: 'Tidak',
@@ -158,7 +191,11 @@ export class KeranjangPage implements OnInit {
         {
           text: 'Iya',
           handler: () => {
-            console.log('Confirm Okay');
+            if(action === 'delete'){
+              this.deleteSelectedProduk();
+            }else if(action === 'checkout'){
+              console.log('Checkout berhasil');
+            }
           },
         },
       ],

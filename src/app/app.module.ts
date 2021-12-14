@@ -18,7 +18,10 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 // Import LocalStorage Module
 import { IonicStorageModule } from '@ionic/storage-angular';
 
+// Import Swiper Module
 import { SwiperModule } from 'swiper/angular';
+
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,9 +34,10 @@ import { SwiperModule } from 'swiper/angular';
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     IonicStorageModule.forRoot(),
-    SwiperModule
+    SwiperModule,
+    HttpClientModule,
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [HttpClient, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

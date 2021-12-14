@@ -70,3 +70,7 @@ hr {
     border-radius: 1rem !important;
   }
 }
+.alert-wrapper {
+  --min-width: 350px !important;
+  --max-width: 350px !important;
+}

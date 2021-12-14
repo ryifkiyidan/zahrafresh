@@ -44,7 +44,9 @@ export class KeranjangService {
       const tempKeranjang = {
         produk,
         jumlah: 1,
-        totalHarga: (produk.harga * (100 - produk.diskon) / 100)
+        totalHarga: (produk.harga * (100 - produk.diskon) / 100),
+        totalHargaAsli: produk.harga,
+        isChecked: false,
       };
       tempKeranjangs.push(tempKeranjang);
     }else{
@@ -53,7 +55,9 @@ export class KeranjangService {
         const tempKeranjang = {
           produk,
           jumlah: 1,
-          totalHarga: (produk.harga * (100 - produk.diskon) / 100)
+          totalHarga: (produk.harga * (100 - produk.diskon) / 100),
+          totalHargaAsli: produk.harga,
+          isChecked: false,
         };
         tempKeranjangs = keranjangs;
         tempKeranjangs.push(tempKeranjang);
@@ -61,7 +65,9 @@ export class KeranjangService {
         const tempKeranjang = {
           produk: keranjang.produk,
           jumlah: keranjang.jumlah + 1,
-          totalHarga: (keranjang.produk.harga * (100 - keranjang.produk.diskon) / 100) * (keranjang.jumlah + 1)
+          totalHarga: (keranjang.produk.harga * (100 - keranjang.produk.diskon) / 100) * (keranjang.jumlah + 1),
+          totalHargaAsli: keranjang.produk.harga * (keranjang.jumlah + 1),
+          isChecked: keranjang.isChecked,
         };
         const i = keranjangs.findIndex(item => item.produk.id === keranjang.produk.id);
         keranjangs[i] = tempKeranjang;
@@ -80,7 +86,9 @@ export class KeranjangService {
       const tempKeranjang = {
         produk: keranjang.produk,
         jumlah: keranjang.jumlah - 1,
-        totalHarga: (keranjang.produk.harga * (100 - keranjang.produk.diskon) / 100) * (keranjang.jumlah - 1)
+        totalHarga: (keranjang.produk.harga * (100 - keranjang.produk.diskon) / 100) * (keranjang.jumlah - 1),
+        totalHargaAsli: keranjang.produk.harga * (keranjang.jumlah - 1),
+        isChecked: keranjang.isChecked,
       };
       const i = keranjangs.findIndex(item => item.produk.id === keranjang.produk.id);
       keranjangs[i] = tempKeranjang;

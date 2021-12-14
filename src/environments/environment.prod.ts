@@ -9,5 +9,6 @@ export const environment = {
     messagingSenderId: '135874713484',
     appId: '1:135874713484:web:009a0593d4637629f0a8a9',
     measurementId: 'G-H8KPEVEN7L'
-  }
+  },
+  binderByteKey: 'c6b2bf925595dd6733364bfa926b8042660874bc3f880b31b24528a97ee67504',
 };

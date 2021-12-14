@@ -20,19 +20,22 @@
         <form [formGroup]="keranjangForm">
           <!-- Produk -->
           <ion-card mode="ios">
-            <ion-card-header>
+            <ion-card-header style="display: flex; flex-flow: row wrap; justify-content: space-between; align-items: center;">
               <ion-card-title style="font-size: 16px;">Produk</ion-card-title>
+              <ion-buttons *ngIf="keranjangs?.length > 0">
+                <ion-button color="danger" size="small" (click)="presentAlertConfirm('Semua produk yang dipilih akan dihapus.', 'delete')"><ion-icon name="trash-outline" slot="icon-only"></ion-icon></ion-button>
+              </ion-buttons>
             </ion-card-header>
             <ion-card-content *ngIf="keranjangs?.length > 0">
-              <!-- <ion-item lines="none" class="ion-margin-bottom">
-                <ion-checkbox #allCheckBox mode="md" color="primary" slot="start" (ionChange)="onChangeAllCheckBox()"></ion-checkbox>
+              <ion-item lines="none" class="ion-margin-bottom" (click)="onClickAllCheckBox()">
+                <ion-checkbox #allCheckBox mode="md" color="primary" slot="start" [checked]="isAllChecked()"></ion-checkbox>
                 <div>
                   <ion-text style="font-size: 14px;"><b>Pilih Semua Produk</b></ion-text>
                 </div>
-              </ion-item> -->
+              </ion-item>
               <ion-list lines="none">
                 <ion-item *ngFor="let keranjang of keranjangs" class="ion-margin-bottom">
-                  <ion-checkbox mode="md" color="primary" slot="start" (ionChange)="onChangeCheckBox(keranjang)" [checked]="isChecked(keranjang)"></ion-checkbox>
+                  <ion-checkbox mode="md" color="primary" slot="start" (ionChange)="onChangeCheckBox(keranjang.produk.id)" [checked]="keranjang.isChecked"></ion-checkbox>
                   <div style="display: flex; flex-flow: column wrap;">
                     <ion-text style="font-size: 14px;"><b>{{ keranjang.produk.nama }}</b></ion-text>
                     <div style="display: flex; flex-flow: row wrap;">
@@ -60,7 +63,10 @@
               <hr>
               <div class="ion-padding" style="display: flex; flex-flow: row wrap; justify-content: space-between;">
                 <ion-text color="primary" style="font-size: 14px;"><b>Total Belanja</b></ion-text>
-                <ion-text color="dark" style="font-size: 16px;">Rp<b>{{ rupiahFormat(getTotalHargaKeranjang()) }}</b></ion-text>
+                <div>
+                  <ion-text *ngIf="getTotalHarga('isHaveDiskon')" class="produk-harga" color="medium" style="margin-right: 0.25rem">Rp{{ rupiahFormat(getTotalHarga('asli')) }}</ion-text>
+                  <ion-text color="dark" style="font-size: 16px;">Rp<b>{{ rupiahFormat(getTotalHarga('diskon')) }}</b></ion-text>
+                </div>
               </div>
             </ion-card-content>
             <ion-card-content *ngIf="keranjangs?.length < 1">
@@ -82,17 +88,17 @@
                 <ion-segment-button>
                   <div style="display: flex; flex-flow: column wrap; align-items: center; justify-content: center;">
                     <ion-text>Besok</ion-text>
-                    <ion-text><b>14 Des</b></ion-text>
+                    <ion-text><b>{{ dateOption1 | date:'d MMM' }}</b></ion-text>
                   </div>
                 </ion-segment-button>
                 <ion-segment-button>
                   <div style="display: flex; flex-flow: column wrap; align-items: center; justify-content: center;">
                     <ion-text>Lusa</ion-text>
-                    <ion-text><b>15 Des</b></ion-text>
+                    <ion-text><b>{{ dateOption2 | date:'d MMM' }}</b></ion-text>
                   </div>
                 </ion-segment-button>
                 <ion-segment-button>
-                  <ion-text><b>16 Des</b></ion-text>
+                  <ion-text><b>{{ dateOption3 | date:'d MMM' }}</b></ion-text>
                 </ion-segment-button>
               </ion-segment>
             </ion-card-content>
@@ -127,36 +133,27 @@
             <ion-card-content>
               <ion-list mode="md">
                 <ion-item>
+                  <ion-label>Provinsi</ion-label>
+                  <ion-select interface="alert" (ionChange)="getKabupaten($event)">
+                    <ion-select-option *ngFor="let provinsi of provinsis" value="{{ provinsi.id }}">{{ provinsi.name }}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <ion-item>
                   <ion-label>Kota/Kabupaten</ion-label>
-                  <ion-select interface="action-sheet">
-                    <ion-select-option value="nes">NES</ion-select-option>
-                    <ion-select-option value="n64">Nintendo64</ion-select-option>
-                    <ion-select-option value="ps">PlayStation</ion-select-option>
-                    <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                    <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                    <ion-select-option value="snes">SNES</ion-select-option>
+                  <ion-select interface="alert" [disabled]="kabupatens.length < 1" (ionChange)="getKecamatan($event)">
+                    <ion-select-option *ngFor="let kabupaten of kabupatens" value="{{ kabupaten.id }}">{{ kabupaten.name }}</ion-select-option>
                   </ion-select>
                 </ion-item>
                 <ion-item>
                   <ion-label>Kecamatan</ion-label>
-                  <ion-select interface="action-sheet">
-                    <ion-select-option value="nes">NES</ion-select-option>
-                    <ion-select-option value="n64">Nintendo64</ion-select-option>
-                    <ion-select-option value="ps">PlayStation</ion-select-option>
-                    <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                    <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                    <ion-select-option value="snes">SNES</ion-select-option>
+                  <ion-select interface="alert" [disabled]="kecamatans.length < 1" (ionChange)="getKelurahan($event)">
+                    <ion-select-option *ngFor="let kecamatan of kecamatans" value="{{ kecamatan.id }}">{{ kecamatan.name }}</ion-select-option>
                   </ion-select>
                 </ion-item>
                 <ion-item>
                   <ion-label>Kelurahan</ion-label>
-                  <ion-select interface="action-sheet">
-                    <ion-select-option value="nes">NES</ion-select-option>
-                    <ion-select-option value="n64">Nintendo64</ion-select-option>
-                    <ion-select-option value="ps">PlayStation</ion-select-option>
-                    <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                    <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                    <ion-select-option value="snes">SNES</ion-select-option>
+                  <ion-select interface="alert" [disabled]="kelurahans.length < 1">
+                    <ion-select-option *ngFor="let kelurahan of kelurahans" value="{{ kelurahan.id }}">{{ kelurahan.name }}</ion-select-option>
                   </ion-select>
                 </ion-item>
                 <ion-item>
@@ -174,7 +171,7 @@
               </ion-list>
             </ion-card-content>
           </ion-card>
-          <ion-button class="ion-margin" type="submit" color="primary" expand="block" shape="round" (click)="presentAlertConfirm()">Checkout <ion-icon name="logo-whatsapp" slot="end"></ion-icon></ion-button>
+          <ion-button class="ion-margin" type="submit" color="primary" expand="block" shape="round" (click)="presentAlertConfirm('Pastikan pesanan dan data pengiriman sudah benar', 'checkout')">Checkout <ion-icon name="logo-whatsapp" slot="end"></ion-icon></ion-button>
         </form>
       </ion-col>
     </ion-row>

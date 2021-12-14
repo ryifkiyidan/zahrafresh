@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -207,6 +208,12 @@ export class KeranjangPage implements OnInit {
     this.keranjangService.setKeranjangs(this.keranjangs);
   }
 
+  checkoutPesanan(){
+    const url = 'https://wa.me/6281323342223?text=' + this.checkoutFormat();
+    this.deleteSelectedProduk();
+    this.openUrl(url);
+  }
+
   getQtyProduct(id: number){
     const keranjang = this.keranjangs.find(item => item.produk.id === id);
     return keranjang.jumlah;
@@ -241,7 +248,7 @@ export class KeranjangPage implements OnInit {
     return ribuan;
   }
 
-  tanggalFormat(date) {
+  tanggalFormat(date, format = null) {
     const monthNames = [
       'Januari', 'Februari', 'Maret',
       'April', 'Mei', 'Juni', 'Juli',
@@ -253,7 +260,49 @@ export class KeranjangPage implements OnInit {
     const monthIndex = date.getMonth();
     const year = date.getFullYear();
 
-    return day + ' ' + monthNames[monthIndex].substring(0,3);
+    if (format){
+      return day + ' ' + monthNames[monthIndex] + ' ' + year;
+    }else{
+      return day + ' ' + monthNames[monthIndex].substring(0,3);
+    }
+  }
+
+  checkoutFormat(){
+
+    let formatProduk = '';
+    let i = 1;
+    this.keranjangs.forEach(keranjang => {
+      if(keranjang.isChecked){
+        formatProduk +=
+          i + '. ' + keranjang.produk.kode + '/' +
+          keranjang.produk.nama + '/' +
+          keranjang.jumlah + '/' +
+          'Rp' + this.rupiahFormat((keranjang.produk.harga * (100 - keranjang.produk.diskon) / 100)) + '/' +
+          'Rp' + this.rupiahFormat((keranjang.produk.harga * (100 - keranjang.produk.diskon) / 100 * keranjang.jumlah)) + '\n';
+        i += 1;
+      }
+    });
+    const tanggalPengiriman = this.tanggalFormat(this.keranjangForm.get('waktuPengiriman').value, 'checkout');
+    const totalBayar = 'Rp' + this.rupiahFormat(this.getTotalHarga('diskon'));
+    const namaPembeli = this.keranjangForm.get('namaPembeli').value;
+    const nomorPembeli = '0' + this.keranjangForm.get('nomorPembeli').value;
+    const provinsi = this.provinsis.find(item => item.id === this.keranjangForm.get('provinsiSelect').value).name;
+    const kabupaten = this.kabupatens.find(item => item.id === this.keranjangForm.get('kabupatenSelect').value).name;
+    const kecamatan = this.kecamatans.find(item => item.id === this.keranjangForm.get('kecamatanSelect').value).name;
+    const kelurahan = this.kelurahans.find(item => item.id === this.keranjangForm.get('kelurahanSelect').value).name;
+    const namaJalan = this.keranjangForm.get('namaJalan').value;
+    const namaPenerima = this.keranjangForm.get('namaPenerima').value;
+    const nomorPenerima = '0' + this.keranjangForm.get('nomorPenerima').value;
+
+    const header = 'Halo saya ingin belanja di Zahra Fresh\n\n';
+    const formatPesanan = 'Format Pesanan\n\nProduk: (Kode/Nama/Qty/Harga/Total)\n' + formatProduk + '\nTotal Bayar: ' + totalBayar + '\n\n';
+    const waktuPengiriman = 'Waktu Pengiriman\n' + tanggalPengiriman + '\n\n';
+    const informasiPembeli = 'Informasi Pembeli\nNama Pembeli: ' + namaPembeli +'\nNomor Pembeli: ' + nomorPembeli + '\n\n';
+    const alamatPengiriman1 = 'Alamat Pengiriman\nProvinsi: ' + provinsi + '\nKota/Kabupaten: ' + kabupaten + '\nKecamatan: ' + kecamatan + '\nKelurahan: ' + kelurahan + '\n';
+    const alamatPengiriman2 = 'Nama Jalan: ' + namaJalan + '\nNama Penerima: ' + namaPenerima + '\nNomor Penerima: ' + nomorPenerima + '\n\n';
+    const footer = 'Terima kasih :)';
+
+    return header + formatPesanan + waktuPengiriman + informasiPembeli + alamatPengiriman1 + alamatPengiriman2 + footer;
   }
 
   async presentAlertConfirm(msg, action) {
@@ -276,6 +325,7 @@ export class KeranjangPage implements OnInit {
             if(action === 'delete'){
               this.deleteSelectedProduk();
             }else if(action === 'checkout'){
+              this.checkoutPesanan();
               console.log('Checkout berhasil');
             }
           },

@@ -18,7 +18,6 @@ export class KeranjangPage implements OnInit {
   keranjangs?: Keranjang[];
   keranjangForm: FormGroup;
 
-  waktuPengiriman:  any;
   currentDate: Date;
   dateOption1: Date;
   dateOption2: Date;
@@ -39,6 +38,9 @@ export class KeranjangPage implements OnInit {
 
   ngOnInit() {
     this.keranjangForm = this.formBuilder.group({
+      waktuPengiriman: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
       namaPembeli: new FormControl('', Validators.compose([
         Validators.required,
       ])),
@@ -51,6 +53,21 @@ export class KeranjangPage implements OnInit {
       nomorPenerima: new FormControl('', Validators.compose([
         Validators.required,
       ])),
+      provinsiSelect: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
+      kabupatenSelect: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
+      kecamatanSelect: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
+      kelurahanSelect: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
+      namaJalan: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
     });
     this.getProvinsi();
     const day = 60 * 60 * 24 * 1000;
@@ -58,6 +75,12 @@ export class KeranjangPage implements OnInit {
     this.dateOption1 = new Date(this.currentDate.getTime() + day);
     this.dateOption2 = new Date(this.currentDate.getTime() + day + day);
     this.dateOption3 = new Date(this.currentDate.getTime() + day + day + day);
+
+    this.keranjangForm.get('waktuPengiriman').setValue(this.dateOption1);
+
+    this.keranjangForm.get('kabupatenSelect').disable();
+    this.keranjangForm.get('kecamatanSelect').disable();
+    this.keranjangForm.get('kelurahanSelect').disable();
   }
 
   async ionViewWillEnter(){
@@ -78,7 +101,8 @@ export class KeranjangPage implements OnInit {
   }
 
   getKabupaten(ev){
-    this.http.get(
+    if(ev.target.value){
+      this.http.get(
         this.baseHref + 'kabupaten?' +
         'api_key=' + environment.binderByteKey +
         '&id_provinsi=' + ev.target.value
@@ -92,10 +116,18 @@ export class KeranjangPage implements OnInit {
             return 0;
           });
       });
+    }
+    this.keranjangForm.get('kabupatenSelect').reset();
+    this.keranjangForm.get('kecamatanSelect').reset();
+    this.keranjangForm.get('kelurahanSelect').reset();
+    this.keranjangForm.get('kabupatenSelect').enable();
+    this.keranjangForm.get('kecamatanSelect').disable();
+    this.keranjangForm.get('kelurahanSelect').disable();
   }
 
   getKecamatan(ev){
-    this.http.get(
+    if(ev.target.value){
+      this.http.get(
         this.baseHref + 'kecamatan?' +
         'api_key=' + environment.binderByteKey +
         '&id_kabupaten=' + ev.target.value
@@ -108,10 +140,16 @@ export class KeranjangPage implements OnInit {
             return 0;
           });
       });
+    }
+    this.keranjangForm.get('kecamatanSelect').reset();
+    this.keranjangForm.get('kelurahanSelect').reset();
+    this.keranjangForm.get('kecamatanSelect').enable();
+    this.keranjangForm.get('kelurahanSelect').disable();
   }
 
   getKelurahan(ev){
-    this.http.get(
+    if(ev.target.value){
+      this.http.get(
         this.baseHref + 'kelurahan?' +
         'api_key=' + environment.binderByteKey +
         '&id_kecamatan=' + ev.target.value
@@ -124,6 +162,9 @@ export class KeranjangPage implements OnInit {
             return 0;
           });
       });
+    }
+    this.keranjangForm.get('kelurahanSelect').reset();
+    this.keranjangForm.get('kelurahanSelect').enable();
   }
 
   onChangeCheckBox(produkId){
@@ -141,6 +182,10 @@ export class KeranjangPage implements OnInit {
 
   isAllChecked(){
     return this.keranjangs.every(keranjang => keranjang.isChecked === true);
+  }
+
+  isSomeChecked(){
+    return this.keranjangs.some(keranjang => keranjang.isChecked === true);
   }
 
   tambah(id: number){

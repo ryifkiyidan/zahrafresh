@@ -84,7 +84,7 @@
               <ion-card-title style="font-size: 16px;">Waktu Pengiriman</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-              <ion-segment mode="md" scrollable>
+              <ion-segment mode="md" scrollable formControlName="waktuPengiriman">
                 <ion-segment-button [value]="dateOption1">
                   <div style="display: flex; flex-flow: column wrap; align-items: center; justify-content: center;">
                     <ion-text>Besok</ion-text>
@@ -135,31 +135,31 @@
               <ion-list mode="md">
                 <ion-item>
                   <ion-label>Provinsi</ion-label>
-                  <ion-select interface="alert" (ionChange)="getKabupaten($event)">
+                  <ion-select formControlName="provinsiSelect" interface="alert" (ionChange)="getKabupaten($event)">
                     <ion-select-option *ngFor="let provinsi of provinsis" value="{{ provinsi.id }}">{{ provinsi.name }}</ion-select-option>
                   </ion-select>
                 </ion-item>
                 <ion-item>
                   <ion-label>Kota/Kabupaten</ion-label>
-                  <ion-select interface="alert" [disabled]="kabupatens.length < 1" (ionChange)="getKecamatan($event)">
+                  <ion-select formControlName="kabupatenSelect" interface="alert" (ionChange)="getKecamatan($event)">
                     <ion-select-option *ngFor="let kabupaten of kabupatens" value="{{ kabupaten.id }}">{{ kabupaten.name }}</ion-select-option>
                   </ion-select>
                 </ion-item>
                 <ion-item>
                   <ion-label>Kecamatan</ion-label>
-                  <ion-select interface="alert" [disabled]="kecamatans.length < 1" (ionChange)="getKelurahan($event)">
+                  <ion-select formControlName="kecamatanSelect" interface="alert" (ionChange)="getKelurahan($event)">
                     <ion-select-option *ngFor="let kecamatan of kecamatans" value="{{ kecamatan.id }}">{{ kecamatan.name }}</ion-select-option>
                   </ion-select>
                 </ion-item>
                 <ion-item>
                   <ion-label>Kelurahan</ion-label>
-                  <ion-select interface="alert" [disabled]="kelurahans.length < 1">
+                  <ion-select formControlName="kelurahanSelect" interface="alert">
                     <ion-select-option *ngFor="let kelurahan of kelurahans" value="{{ kelurahan.id }}">{{ kelurahan.name }}</ion-select-option>
                   </ion-select>
                 </ion-item>
                 <ion-item>
                   <ion-label position="floating">Nama Jalan</ion-label>
-                  <ion-textarea placeholder="Nama Jalan"></ion-textarea>
+                  <ion-textarea formControlName="namaJalan" placeholder="Nama Jalan"></ion-textarea>
                 </ion-item>
                 <ion-item>
                   <ion-label position="floating">Nama Penerima</ion-label>
@@ -172,7 +172,11 @@
               </ion-list>
             </ion-card-content>
           </ion-card>
-          <ion-button class="ion-margin" type="submit" color="primary" expand="block" shape="round" (click)="presentAlertConfirm('Pastikan pesanan dan data pengiriman sudah benar', 'checkout')">Checkout <ion-icon name="logo-whatsapp" slot="end"></ion-icon></ion-button>
+          <ion-button
+            class="ion-margin" type="submit" color="primary"expand="block" shape="round"
+            (click)="presentAlertConfirm('Pastikan pesanan dan data pengiriman sudah benar', 'checkout')"
+            [disabled]="!keranjangForm.valid || !isSomeChecked()"
+          >Checkout <ion-icon name="logo-whatsapp" slot="end"></ion-icon></ion-button>
         </form>
       </ion-col>
     </ion-row>

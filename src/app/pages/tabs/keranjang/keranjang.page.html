@@ -85,20 +85,21 @@
             </ion-card-header>
             <ion-card-content>
               <ion-segment mode="md" scrollable>
-                <ion-segment-button>
+                <ion-segment-button [value]="dateOption1">
                   <div style="display: flex; flex-flow: column wrap; align-items: center; justify-content: center;">
                     <ion-text>Besok</ion-text>
-                    <ion-text><b>{{ dateOption1 | date:'d MMM' }}</b></ion-text>
+                    <ion-text><b>{{ tanggalFormat(dateOption1) }}</b></ion-text>
                   </div>
                 </ion-segment-button>
-                <ion-segment-button>
+                <ion-segment-button [value]="dateOption2">
                   <div style="display: flex; flex-flow: column wrap; align-items: center; justify-content: center;">
                     <ion-text>Lusa</ion-text>
-                    <ion-text><b>{{ dateOption2 | date:'d MMM' }}</b></ion-text>
+                    <ion-text><b>{{ tanggalFormat(dateOption2) }}</b></ion-text>
                   </div>
                 </ion-segment-button>
-                <ion-segment-button>
-                  <ion-text><b>{{ dateOption3 | date:'d MMM' }}</b></ion-text>
+                <ion-segment-button [value]="dateOption3">
+                  <ion-text>Tulat</ion-text>
+                  <ion-text><b>{{ tanggalFormat(dateOption3) }}</b></ion-text>
                 </ion-segment-button>
               </ion-segment>
             </ion-card-content>

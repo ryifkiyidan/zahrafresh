@@ -67,7 +67,13 @@ export class KeranjangPage implements OnInit {
   getProvinsi(){
     this.http.get(this.baseHref + 'provinsi?' + 'api_key=' + environment.binderByteKey).subscribe(res => {
       const tempRes: any = res;
-      this.provinsis = tempRes.value.filter(item => item.id === '36');
+      this.provinsis = tempRes.value
+        .filter(item => item.id === '36')
+        .sort((a, b) => {
+          if(a.name < b.name) { return -1; }
+          if(a.name > b.name) { return 1; }
+          return 0;
+        });
     });
   }
 
@@ -78,7 +84,13 @@ export class KeranjangPage implements OnInit {
         '&id_provinsi=' + ev.target.value
       ).subscribe(res => {
         const tempRes: any = res;
-        this.kabupatens = tempRes.value.filter(item => item.id === '3603' || item.id === '3671' || item.id === '3674');
+        this.kabupatens = tempRes.value
+          .filter(item => item.id === '3603' || item.id === '3671' || item.id === '3674')
+          .sort((a, b) => {
+            if(a.name < b.name) { return -1; }
+            if(a.name > b.name) { return 1; }
+            return 0;
+          });
       });
   }
 
@@ -89,7 +101,12 @@ export class KeranjangPage implements OnInit {
         '&id_kabupaten=' + ev.target.value
       ).subscribe(res => {
         const tempRes: any = res;
-        this.kecamatans = tempRes.value;
+        this.kecamatans = tempRes.value
+          .sort((a, b) => {
+            if(a.name < b.name) { return -1; }
+            if(a.name > b.name) { return 1; }
+            return 0;
+          });
       });
   }
 
@@ -100,7 +117,12 @@ export class KeranjangPage implements OnInit {
         '&id_kecamatan=' + ev.target.value
       ).subscribe(res => {
         const tempRes: any = res;
-        this.kelurahans = tempRes.value;
+        this.kelurahans = tempRes.value
+          .sort((a, b) => {
+            if(a.name < b.name) { return -1; }
+            if(a.name > b.name) { return 1; }
+            return 0;
+          });
       });
   }
 
@@ -172,6 +194,21 @@ export class KeranjangPage implements OnInit {
     const reverse = value.toString().split('').reverse().join('');
     const ribuan = reverse.match(/\d{1,3}/g).join('.').split('').reverse().join('');
     return ribuan;
+  }
+
+  tanggalFormat(date) {
+    const monthNames = [
+      'Januari', 'Februari', 'Maret',
+      'April', 'Mei', 'Juni', 'Juli',
+      'Agustus', 'September', 'Oktober',
+      'November', 'Desember'
+    ];
+
+    const day = date.getDate();
+    const monthIndex = date.getMonth();
+    const year = date.getFullYear();
+
+    return day + ' ' + monthNames[monthIndex].substring(0,3);
   }
 
   async presentAlertConfirm(msg, action) {

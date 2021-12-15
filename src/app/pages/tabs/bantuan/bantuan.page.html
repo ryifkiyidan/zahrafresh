@@ -17,17 +17,26 @@
   <ion-grid class="ion-no-padding">
     <ion-row class="ion-no-padding">
       <ion-col class="ion-padding" sizeXs="12" sizeSm="10" offsetSm="1" sizeMd="8" offsetMd="2" sizeLg="6" offsetLg="3">
+        <ion-card style="border-radius: 1rem; padding: 0; margin: 0;" mode="ios">
+          <ion-card-header>
+            <ion-card-title>
+              <div style="display: flex; justify-content: center; align-items: center;">
+                <ion-img style="width: 25vh; height: 100%; cursor: pointer;" (click)="openUrl('https://zahrafresh.com')" src="assets/images/header-zahrafresh.png"></ion-img>
+              </div>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-text style="text-align: justify;">
+              <p><b>Zahra Fresh</b> berdiri semenjak tahun 2015, yang selalu menyediakan buah <code>premium</code> yang <code>segar</code>, <code>berkualitas</code> dengan harga <code>paling murah</code>. Dengan tahapan sortiran yang ketat, <b>Zahra Fresh</b> selalu <code>berkomitmen</code> menjaga <code>kesegaran</code> buah dan <code>mutunya</code> sampai ditangan anda.</p>
+            </ion-text>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-no-padding">
+      <ion-col class="ion-padding" sizeXs="12" sizeSm="10" offsetSm="1" sizeMd="8" offsetMd="2" sizeLg="6" offsetLg="3">
+        <ion-text><h4><b>FAQ</b></h4></ion-text>
         <div class="accordion accordion-flush" id="accordionFlushExample">
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingOne">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                Apa itu Zahra Fresh?
-              </button>
-            </h2>
-            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-              <div class="accordion-body"><code>Zahra Fresh</code> berdiri semenjak tahun 2015, yang selalu menyediakan buah premium yang segar, berkualitas dengan harga paling murah. Dengan tahapan sortiran yang ketat, <code>Zahra Fresh</code> selalu berkomitmen menjaga kesegaran buah dan mutunya sampai ditangan anda.</div>
-            </div>
-          </div>
           <div class="accordion-item">
             <h2 class="accordion-header" id="flush-headingTwo">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
@@ -35,7 +44,20 @@
               </button>
             </h2>
             <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-              <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.</div>
+              <div class="accordion-body">
+                <b>Cara memesan produk:</b>
+                <ol>
+                  <li>Pilih produk yang ingin dibeli</li>
+                  <li>Klik "BELI"</li>
+                  <li>Tekan (+) untuk menambah jumlah produk</li>
+                  <li>Klik gambar keranjang belanja di bagian bawah layar</li>
+                  <li>Pilih produk yang ingin dipesan</li>
+                  <li>Pilih waktu pengiriman</li>
+                  <li>Isi data pengiriman</li>
+                  <li>Pastikan Produk dan Data Pengiriman sudah benar</li>
+                  <li>Klik "Checkout" untuk pemesanan</li>
+                </ol>
+              </div>
             </div>
           </div>
           <div class="accordion-item">
@@ -45,7 +67,9 @@
               </button>
             </h2>
             <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-              <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+              <div class="accordion-body" style="text-align: justify">
+                Setelah melakukan pemesanan atau checkout, anda dapat membayar melalui transfer bank manual lalu berikan bukti transfer kepada admin kami.
+              </div>
             </div>
           </div>
           <div class="accordion-item">
@@ -55,17 +79,18 @@
               </button>
             </h2>
             <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
-              <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingSix">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
-                Apakah ada sosial media milik Zahra Fresh?
-              </button>
-            </h2>
-            <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
-              <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+              <div class="accordion-body" style="text-align: justify">
+                Metode pembayaran untuk saat ini hanya dapat dilakukan dengan Transfer Bank.
+                <br>Berikut merupakan nomor rekening Zahra Fresh:
+                <ul>
+                  <li>7621339847 a\n Zahra Fresh (BCA)</li>
+                  <li>7621339847 a\n Zahra Fresh (BNI)</li>
+                  <li>7621339847 a\n Zahra Fresh (BRI)</li>
+                  <li>7621339847 a\n Zahra Fresh (Mandiri)</li>
+                </ul>
+
+                <ion-text style="font-size: 12px;"><code>*Hati-hati penipuan! Zahra Fresh tidak memiliki nomor rekening lain selain diatas</code></ion-text>
+              </div>
             </div>
           </div>
           <div class="accordion-item">
@@ -75,7 +100,21 @@
               </button>
             </h2>
             <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
-              <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+              <div class="accordion-body">
+                Anda dapat datang langsung ke toko kami pada alamat berikut. <br><br>
+                <b>MODERN TOWN MARKET, RT.003/RW.006, Babakan, Tangerang, Kota Tangerang, Banten 15117.</b> <br>
+                <ion-text style="font-size: 12px; cursor: pointer; color: #0645AD;" (click)="openUrl('https://maps.app.goo.gl/wvcwyXCdtessGTxu5')">Buka di Google Maps</ion-text><br><br>
+                Anda juga dapat memberikan keluhan anda pada kontak dibawah ini:
+                <br>
+                <div class="ecom-logo-container">
+                  <div style="padding-right: 0.5rem">
+                    <img class="ecom-logo" src="assets/images/whatsapp-logo.png" (click)="openUrl('https://www.tokopedia.com/zahrafruit')" />
+                  </div>
+                  <div style="margin-right: 1rem">
+                    <img class="ecom-logo" src="assets/images/instagram-logo.png" (click)="openUrl('https://shopee.co.id/zahrafruitmart')" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

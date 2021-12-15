@@ -7,3 +7,18 @@
   border-radius: 1rem;
   box-shadow: 0 5px 10px rgb(0 0 0 / 8%);
 }
+
+.ecom-logo {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50% !important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.ecom-logo-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}

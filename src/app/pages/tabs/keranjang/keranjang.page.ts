@@ -276,7 +276,7 @@ export class KeranjangPage implements OnInit {
         formatProduk +=
           i + '. ' + keranjang.produk.kode + '/' +
           keranjang.produk.nama + '/' +
-          keranjang.jumlah + '/' +
+          keranjang.jumlah + 'kg' + '/' +
           'Rp' + this.rupiahFormat((keranjang.produk.harga * (100 - keranjang.produk.diskon) / 100)) + '/' +
           'Rp' + this.rupiahFormat((keranjang.produk.harga * (100 - keranjang.produk.diskon) / 100 * keranjang.jumlah)) + '\n';
         i += 1;
@@ -315,8 +315,8 @@ export class KeranjangPage implements OnInit {
           text: 'Tidak',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
+          handler: () => {
+            console.log('Confirm Cancel');
           },
         },
         {

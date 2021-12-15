@@ -12,4 +12,8 @@ export class BantuanPage implements OnInit {
   ngOnInit() {
   }
 
+  openUrl(url){
+    window.open(encodeURI(url));
+  }
+
 }
